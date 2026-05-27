@@ -1,0 +1,44 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches:
+      - main # سيعمل البناء التلقائي في كل مرة ترفع فيها كوداً لفرع main
+  workflow_dispatch: # يتيح لك تشغيل البناء يدوياً بضغطة زر
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. سحب الكود من المستودع الخاص بك
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. إعداد بيئة الجافا المطلوبة للأندرويد
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # 3. إعداد وتثبيت Flutter SDK سحابياً
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      # 4. تحميل المكتبات والحزم (بما فيها Agora)
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 5. خطوة البناء الكبرى لتوليد الـ APK للأندرويد
+      - name: Build APK
+        run: flutter build apk --release --target-platform android-arm64
+
+      # 6. رفع الملف الناتج كـ Artifact لتستطيع تحميله لهاتفك
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk

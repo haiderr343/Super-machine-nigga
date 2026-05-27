@@ -1,0 +1,31 @@
+name: agora_video_call
+description: Real-time video and audio calling app powered by Agora.io SDK.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Agora RTC Engine for real-time video/audio
+  agora_rtc_engine: ^6.3.0
+
+  # Runtime permissions (camera, microphone)
+  permission_handler: ^11.3.0
+
+  # State management
+  provider: ^6.1.2
+
+  # Material icons
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
