@@ -34,11 +34,11 @@ jobs:
 
       # 5. خطوة البناء الكبرى لتوليد الـ APK للأندرويد
       - name: Build APK
-        run: flutter build apk --release --target-platform android-arm64
+        run: flutter build apk --debug --target-platform android-arm64
 
       # 6. رفع الملف الناتج كـ Artifact لتستطيع تحميله لهاتفك
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
